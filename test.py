@@ -37,10 +37,13 @@ ErrData     =   ErrData[::Skip]                                 # Error coeffici
 ErrSort     =   np.argsort(-ErrData)    # sort errors in a descending order and note the corresponding indices, e.g., [15, 53, 5... ]
 DatSort     =   np.argsort(-p0Data)     # sort gold-standard in a descending order and note the corresponding indices, e.g., [45, 89, 29.. ]
 
-# Formulation1 (Equation 82 + section 4.3.3 of the paper) dictates that:
+# Formulation1 (Equation 83 + section 6.1 of the paper) dictates that: 
 #    For the prediction sequence that maximises CCC, given set{E}:
-#      Context (as given by section 4.1 title) : [Gold standard=G=Y], [Prediction=P=X] ,   [D=X-Y].
-#      Consequently therefore                  : [Error=E=P-G],          implying          [P=G+E].
+#       * Errors should be sorted in the same order as of the order in the gold standard, 
+#                       and are added to the gold standard to generate the prediction sequence.
+#       * Reasoning for the claim: Cf. Section 6.1) which states, [Gold standard=G=Y], [Prediction=P=X] ,   [D=X-Y].
+#       * Consequently,                                         : [Error=E=P-G],          implying          [P=G+E].
+
 p1Err           = np.zeros_like(p0Data)
 p1Err[DatSort]  = ErrData[ErrSort]       # p1Error = sequence of error coefficients sorted in a descending order
 p1Data          = p0Data+p1Err           # p1Data = p0Data+p1Error = corresponding prediction sequence maximising CCC
@@ -51,10 +54,12 @@ p1r_Err           = np.zeros_like(p0Data)           # Try any other sequence by 
 p1r_Err[DatSort] = ErrData[ErrRandomOrder]
 p1r_Data         = p0Data+p1r_Err
 
-# Formulation2 (Equation 85 + section 4.3.3 of the paper) dictates that:
+# Formulation2 (Equation 84 + section 6.2 of the paper) dictates that:
 #    For the prediction sequence that maximises CCC, given set{E}:
-#      Context (as given by section 4.2 title) : [Gold standard=G=X], [Prediction=P=Y],    [D=X-Y].
-#      Consequently therefore                  : [Error=E=G-P],          implying          [P=G-E].
+#       * Errors should be sorted in the opposite order as of the order in the gold standard, 
+#                       and are subtracted from the gold standard to generate the prediction sequence.
+#       * Reasoning for the claim: Cf. Section 6.2 which states, [Gold standard=G=X], [Prediction=P=Y],    [D=X-Y].
+#       * Consequently,                                        : [Error=E=G-P],          implying          [P=G-E].
 
 p2Err           = np.zeros_like(p0Data)   
 p2Err[DatSort]  = ErrData[ErrSort[::-1]] # p2Error = sequence of error coefficients sorted in a ascending order
@@ -66,7 +71,10 @@ p2r_Err           = np.zeros_like(p0Data)           # Try any other sequence by 
 p2r_Err[DatSort] = ErrData[ErrRandomOrder]
 p2r_Data         = p0Data-p2r_Err
 
-# Moment of truth, compute and compare CCC values:
+###########################
+# The moment of truth! 
+###########################
+# Compute and compare CCC values:
 
 ccc1=calc_scores(p0Data,p1Data)[0]
 ccc2=calc_scores(p0Data,p2Data)[0]
@@ -92,7 +100,7 @@ ax[0][1].plot(TotTime,p2Data, 'b',label=' Prediction 2')
 ax[0][1].text(0, 0.4, "CCC="+"{0:.3f}".format(ccc2), fontsize=10)
 # Subplot(1,0)
 ax[1][0].scatter(TotTime,p1Err[DatSort[::-1]],0.5, color='k', label='Errors Sorted (Ascending)')
-ax[1][0].plot(TotTime,p1Data-p2Data, 'm',linewidth=1.1,label='Prediction 1 - Prediction 2')         # comment out this, 
+ax[1][0].plot(TotTime,p1Data-p2Data, 'm',linewidth=1.1,label='Prediction 1 - Prediction 2')         # you might want to comment out this, 
                                                                                                     # if error is too small in comparison
 ax[1][0].set_ylabel('Arousal Level\n(Errors)')
 ax[1][0].set_xlabel('Instance number')
@@ -102,8 +110,8 @@ ax[1][1].plot(TotTime,p1Data-p0Data, 'r',linewidth=1.1,label='Error Sequence 1')
 ax[1][1].plot(TotTime,p0Data-p2Data, 'b',linewidth=1.1,label='Error Sequence 2')
 ax[1][1].set_xlabel('Instance number')
 # set figure size, legends, axis limits
-ax[0][0].set_ylim([-0.25,0.5])                  # MAKE SURE TO COMMENT THIS LINE OUT/SET ylims differently if different ErrData is used.
-ax[1][0].set_ylim([0,0.45])                     # MAKE SURE TO COMMENT THIS LINE OUT/SET ylims differently if different ErrData is used. :)
+ax[0][0].set_ylim([-0.25,0.5])                  # YOU MIGHT WANT TO COMMENT THIS LINE OUT/SET ylims differently if different ErrData is used.
+ax[1][0].set_ylim([0,0.45])                     # YOU MIGHT WANT TO COMMENT THIS LINE OUT/SET ylims differently if different ErrData is used. :)
 ax[0][0].legend(loc='lower right')
 ax[0][1].legend()
 ax[1][0].legend()
