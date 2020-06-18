@@ -1,13 +1,15 @@
-## The script: 
+### The script: 
 `test_ccc_to_mse_mapping.py`
-### What it does: Reaffirmation of the formulations presented in section3:
+### What it does: 
+Reaffirmation of the formulations presented in section3:
 ### Deals with: CCC to MSE mapping
 * Please feel free to change the gold standard sequence (`GoldSeq`), the error set, (i.e. `ErrData`), or to modify order of errors coefficients (`p1r_Err`) to cross-check the findings presented in the paper. 
 
 
-## The script: 
+### The script: 
 ### `test_ccc_minmax_at_mse.py`
-### What it does: Reaffirmation of the formulations presented in section 4
+### What it does: 
+#### Reaffirmation of the formulations presented in section 4
 ### Deals with: CCC maximisation and minimisation when given a fixed MSE
 * Please feel free to change the gold standard sequence (`GoldSeq`), the error set, (i.e. `ErrData`), or to modify order of errors coefficients (`p1r_Err`) to cross-check the findings presented in the paper. 
 
