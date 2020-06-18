@@ -37,11 +37,11 @@ ErrData     =   ErrData[::Skip]                                 # Error coeffici
 ErrSort     =   np.argsort(-ErrData)    # sort errors in a descending order and note the corresponding indices, e.g., [15, 53, 5... ]
 DatSort     =   np.argsort(-p0Data)     # sort gold-standard in a descending order and note the corresponding indices, e.g., [45, 89, 29.. ]
 
-# Formulation1 (Equation 83 + section 6.1 of the paper) dictates that: 
+# Formulation1 (Equation 89 + section 9.1 of the paper) dictates that: 
 #    For the prediction sequence that maximises CCC, given set{E}:
 #       * Errors should be sorted in the same order as of the order in the gold standard, 
 #                       and are added to the gold standard to generate the prediction sequence.
-#       * Reasoning for the claim: Cf. Section 6.1) which states, [Gold standard=G=Y], [Prediction=P=X] ,   [D=X-Y].
+#       * Reasoning for the claim: Cf. Section 9.1) which states, [Gold standard=G=Y], [Prediction=P=X] ,   [D=X-Y].
 #       * Consequently,                                         : [Error=E=P-G],          implying          [P=G+E].
 
 p1Err           = np.zeros_like(p0Data)
@@ -54,18 +54,20 @@ p1r_Err           = np.zeros_like(p0Data)           # Try any other sequence by 
 p1r_Err[DatSort] = ErrData[ErrRandomOrder]
 p1r_Data         = p0Data+p1r_Err
 
-# Formulation2 (Equation 84 + section 6.2 of the paper) dictates that:
+# Formulation2 (Equation 90 + section 9.2 of the paper) dictates that:
 #    For the prediction sequence that maximises CCC, given set{E}:
 #       * Errors should be sorted in the opposite order as of the order in the gold standard, 
 #                       and are subtracted from the gold standard to generate the prediction sequence.
-#       * Reasoning for the claim: Cf. Section 6.2 which states, [Gold standard=G=X], [Prediction=P=Y],    [D=X-Y].
+#       * Reasoning for the claim: Cf. Section 9.2 which states, [Gold standard=G=X], [Prediction=P=Y],    [D=X-Y].
 #       * Consequently,                                        : [Error=E=G-P],          implying          [P=G-E].
 
-p2DataNeg     = p0Data-p1Err
 p2Err           = np.zeros_like(p0Data)   
 p2Err[DatSort]  = ErrData[ErrSort[::-1]] # p2Error = sequence of error coefficients sorted in a ascending order
 p2Data          = p0Data-p2Err           # p2Data = p0Data-p2Error = corresponding prediction sequence maximising CCC.
+
+# Minimum CCC achievable for the two formulations (Equation 99 + section 9.1, and Equation 100 + section 9.2 of the paper)
 p1DataNeg     = p0Data+p2Err
+p2DataNeg     = p0Data-p1Err
 
 ErrRandomOrder  = random.sample(range(p2Err.shape[0]), p2Err.shape[0])         
 p2r_Err           = np.zeros_like(p0Data)           # Try any other sequence by reordering of the error coefficients, 
