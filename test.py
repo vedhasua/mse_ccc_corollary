@@ -25,8 +25,8 @@ DurTime     =   EndTime-BegTime
 TotTime     =   np.arange(BegTime,EndTime,1)[::Skip]
 
 p0Data      =   Train_L[BegTime:EndTime,0][::Skip]              # Gold Standard = p0Data = Train_L[0 to 1500] in steps of 10
-ErrData     =   \
- 0.1*np.power(10,np.linspace(0,1,DurTime))*0.2   
+#ErrData     =   np.random.uniform(0,0.2,size=1500)
+ErrData     =   0.1*np.power(10,np.linspace(0,1,DurTime))*0.2   
 ErrData     =   ErrData[::Skip]                                 # Error coefficients, same length as of p0Data.
 
 # Other example error coefficient sets to play with, or create feel free to create your own: 
@@ -61,9 +61,11 @@ p1r_Data         = p0Data+p1r_Err
 #       * Reasoning for the claim: Cf. Section 6.2 which states, [Gold standard=G=X], [Prediction=P=Y],    [D=X-Y].
 #       * Consequently,                                        : [Error=E=G-P],          implying          [P=G-E].
 
+p2DataNeg     = p0Data-p1Err
 p2Err           = np.zeros_like(p0Data)   
 p2Err[DatSort]  = ErrData[ErrSort[::-1]] # p2Error = sequence of error coefficients sorted in a ascending order
 p2Data          = p0Data-p2Err           # p2Data = p0Data-p2Error = corresponding prediction sequence maximising CCC.
+p1DataNeg     = p0Data+p2Err
 
 ErrRandomOrder  = random.sample(range(p2Err.shape[0]), p2Err.shape[0])         
 p2r_Err           = np.zeros_like(p0Data)           # Try any other sequence by reordering of the error coefficients, 
