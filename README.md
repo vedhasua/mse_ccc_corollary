@@ -29,6 +29,6 @@ Reaffirmation of the formulations presented in sections 9, 10, and figure 5 rege
 ##
 
 ### General Notes:
-* It might be helpful to read through the comments in `test_ccc_minmax_given_errorset.py`. :)
-* Please always feel free to reach out to panditvedhas (at) gmail (dot) com, for any questions.
+* It might be helpful to read through the comments in the scripts. 
+* Please always feel free to reach out to panditvedhas (at) gmail (dot) com, for any questions. 
 
