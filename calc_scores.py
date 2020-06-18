@@ -17,8 +17,11 @@ def calc_scores ( x, y ):
     
     covariance = np.nanmean((x-x_mean)*(y-y_mean))
     
-    x_var = 1.0 / (len(x)-1) * np.nansum((x-x_mean)**2) # Make it consistent with Matlab's nanvar (division by len(x)-1, not len(x)))
-    y_var = 1.0 / (len(y)-1) * np.nansum((y-y_mean)**2)
+    #x_var = 1.0 / (len(x)-1) * np.nansum((x-x_mean)**2) # Make it consistent with Matlab's nanvar (division by len(x)-1, not len(x)))
+    #y_var = 1.0 / (len(y)-1) * np.nansum((y-y_mean)**2)
+
+    x_var = 1.0 / (len(x)) * np.nansum((x-x_mean)**2)    # Bias=True, normalised by N (as opposed to N-1)
+    y_var = 1.0 / (len(y)) * np.nansum((y-y_mean)**2)
     
     CCC = (2*covariance) / (x_var + y_var + (x_mean-y_mean)**2)
     
