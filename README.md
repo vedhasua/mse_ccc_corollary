@@ -3,7 +3,7 @@
 ### What it does: 
 Reaffirmation of the formulations presented in section3:
 ### Deals with: CCC to MSE mapping
-* Please feel free to change the gold standard sequence (`GoldSeq`), the error set, (i.e. `ErrData`), or to modify order of errors coefficients (`p1r_Err`) to cross-check the findings presented in the paper. 
+* Please feel free to change the gold standard sequence (i.e. `GoldSeq`), the error set (i.e. `ErrData`), or to modify order of errors coefficients (`p1r_Err`) to cross-check the findings presented in the paper. 
 
 ##
 
@@ -12,7 +12,7 @@ Reaffirmation of the formulations presented in section3:
 ### What it does: 
 Reaffirmation of the formulations presented in section 4
 ### Deals with: CCC maximisation and minimisation when given a fixed MSE
-* Please feel free to change the gold standard sequence (`GoldSeq`), the error set, (i.e. `ErrData`), or to modify order of errors coefficients (`p1r_Err`) to cross-check the findings presented in the paper. 
+* Please feel free to change the gold standard sequence (i.e. `GoldSeq`), mean square error (i.e. `MSE`) the error set (i.e. `ErrData`) to cross-check the findings presented in the paper. 
 
 ##
 
@@ -21,7 +21,7 @@ Reaffirmation of the formulations presented in section 4
 ### What it does: 
 Reaffirmation of the formulations presented in sections 9, 10, and figure 5 regeneration:
 ### Deals with: CCC maximisation and minimisation when given a fixed set of errors
-* Please feel free to change the gold standard sequence (`GoldSeq`), the error set, (i.e. `ErrData`), or to modify order of errors coefficients (`p1r_Err` and `p2r_Err`) to cross-check the findings presented in the paper. 
+* Please feel free to change the gold standard sequence (i.e. `GoldSeq`), the error set (i.e. `ErrData`), or to modify order of errors coefficients (`p1r_Err` and `p2r_Err`) to cross-check the findings presented in the paper. 
 
 ##
 

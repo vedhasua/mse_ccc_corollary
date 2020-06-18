@@ -5,7 +5,7 @@
 #        obtained when errors are equally and positively proportional to the deviation of the gold standard value from the gold standard mean.
 # and CCC_min = \Upsilon(1-abs(mse/2std(G)))=defined to be \phi(abs(mse/2std(G))), 
 #        obtained when errors are equally and positively proportional to the deviation of the gold standard value from the gold standard mean.
-# Using the script below, one can test the established identity using own gold standard sequence (GoldSeq) and/or own chosen value of MSE, and test against an error sequence of choice (OtherErr) amounting to the same MSE. 
+# Using the script below, one can test the established identity using own gold standard sequence (GoldSeq) and/or own chosen value of MSE, and test against an error sequence of choice (ErrData) amounting to the same MSE. 
 
 import numpy as np
 import fnmatch
@@ -62,13 +62,13 @@ print("\tCCC (gold, pred_minimum) = {:.5f}".format(cccMin))
 ######## Any other error sequence with the same squared sum is bound to generate a prediction, with CCC that is between CCC_min and CCC_max.
 
 print("\n....\tNow I am going to generate a random error sequence with the squared sum = given MSE.")
-OtherErr = np.random.uniform(0,0.2,size=GoldSeq.size)
-OtherErr = np.sqrt(MSE*OtherErr.size/np.sum(np.power(OtherErr,2)))*OtherErr
-MSE3 = np.sum(np.power(OtherErr,2))/OtherErr.size
+ErrData = np.random.uniform(0,0.2,size=GoldSeq.size)
+ErrData = np.sqrt(MSE*ErrData.size/np.sum(np.power(ErrData,2)))*ErrData
+MSE3 = np.sum(np.power(ErrData,2))/ErrData.size
 print("\tVerify that the given MSE (={:.5f}) equals the squared sum for the error sequence I just generated (={:.5f}).".format(MSE,MSE3))
 print("\tWith this error sequence, I can generate two prediction sequences for the given gold standard sequence, P=G+E and P=G-E.")
-prediction1 = GoldSeq + OtherErr
-prediction2 = GoldSeq - OtherErr
+prediction1 = GoldSeq + ErrData
+prediction2 = GoldSeq - ErrData
 ccc1NonOpt=calc_scores(GoldSeq,prediction1)[0]
 ccc2NonOpt=calc_scores(GoldSeq,prediction2)[0]
 print("\n....\tCorrespondingly, ")
