@@ -23,7 +23,7 @@ Reaffirmation of the formulations presented in section 4.
 ### Deals with: 
 CCC maximisation and minimisation when given a fixed set of errors
 ### What it does: 
-Reaffirmation of the formulations presented in sections 9, 10, and figure 5 regeneration.
+Reaffirmation of the formulations presented in sections 8, and figure 4 regeneration.
 * Please feel free to change the gold standard sequence (i.e. `GoldSeq`), the error set (i.e. `ErrData`), or to modify order of errors coefficients (`p1r_Err` and `p2r_Err`) to cross-check the findings presented in the paper. 
 
 ##
