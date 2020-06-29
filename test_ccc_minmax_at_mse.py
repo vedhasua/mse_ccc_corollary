@@ -1,5 +1,5 @@
 # (c) Vedhas Pandit
-# The following script reaffirms the formulation presented in Section 4: Equations 45 and 45.
+# The following script reaffirms the formulation presented in Section 4: Equations 11 and 12.
 # That is, if \Upsilon(t) is defined to be 2t/(1+t^2), then
 #     CCC_max = \Upsilon(1+abs(mse/2std(G)))=defined to be \Phi(abs(mse/2std(G))), 
 #        obtained when errors are equally and positively proportional to the deviation of the gold standard value from the gold standard mean.
@@ -42,11 +42,12 @@ print("\tYou can try tweaking 'MSE' to cross-check this! :)")
 MSE         =   np.pi/100 #0.00166 #
 print("\n....\tYou have now set MSE = {:.5f}".format(MSE))
 
-#### Compute the multiplier = abs(np.sqrt(MSE/np.std(GoldSeq,ddof=0))) as per Equations 30 and 41, to generate the optimised error sequence.
+#### Compute the multiplier = abs(np.sqrt(MSE/np.std(GoldSeq,ddof=0))) as per Equations 5 and 10, to generate the optimised error sequence.
 multiplier  =   abs(np.sqrt(MSE)/np.std(GoldSeq,ddof=0))
 Err_optCCC  =   multiplier*(GoldSeq-np.mean(GoldSeq))
 MSE2        =   np.sum(np.power(Err_optCCC,2))/Err_optCCC.size
-print("\n....\tGiven your MSE and the gold standard sequence, I came up with error sequence that would maximise (and minimise) the CCC.")
+print("\nSection 4:")
+print("....\tGiven your MSE and the gold standard sequence, I came up with error sequence that would maximise (and minimise) the CCC.")
 print("\tVerify that the given MSE (={:.5f}) equals the squared sum of the optimised error sequence I just computed (={:.5f}).".format(MSE,MSE2))
 
 ######## Optimised prediction sequences for the given MSE and the given gold standard sequence, yeilding CCC = CCC_min and CCC_max. 
@@ -60,8 +61,8 @@ print("\tCCC (gold, pred_maximum) = {:.5f}".format(cccMax))
 print("\tCCC (gold, pred_minimum) = {:.5f}".format(cccMin))
 
 ######## Any other error sequence with the same squared sum is bound to generate a prediction, with CCC that is between CCC_min and CCC_max.
-
-print("\n....\tNow I am going to generate a random error sequence with the squared sum = given MSE.")
+print("\nSection 8:")
+print("....\tNow I am going to generate a random error sequence with the squared sum = given MSE.")
 ErrData = np.random.uniform(0,0.2,size=GoldSeq.size)
 ErrData = np.sqrt(MSE*ErrData.size/np.sum(np.power(ErrData,2)))*ErrData
 MSE3 = np.sum(np.power(ErrData,2))/ErrData.size

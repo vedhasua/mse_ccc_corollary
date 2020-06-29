@@ -1,7 +1,7 @@
 # (c) Vedhas Pandit
-# The following script reaffirms the findings presented in section 9 and 10 (Equations 89 through 100, Figure 5). 
+# The following script reaffirms the findings presented in section 8 (Equations 28 through 36, Figure 4). 
 # That is, the CCC maximisation and minimisation conditions and formulations, given a gold standard and a fixed set of error coefficients.
-# Using the script below, one can also regenerate the prediction plots and the plots for sorted error coefficients (similar to the Figure 5 in the paper), using own gold standard sequence (GoldSeq) and/or own set of error coefficients (ErrData).
+# Using the script below, one can also regenerate the prediction plots and the plots for sorted error coefficients (similar to the Figure 4 in the paper), using own gold standard sequence (GoldSeq) and/or own set of error coefficients (ErrData).
 
 import numpy as np
 import fnmatch
@@ -42,7 +42,7 @@ ErrData     =   ErrData[::Skip]                                 # Error coeffici
 ErrSort     =   np.argsort(-ErrData)    # sort errors in a descending order and note the corresponding indices, e.g., [15, 53, 5... ]
 DatSort     =   np.argsort(-GoldSeq)     # sort gold-standard in a descending order and note the corresponding indices, e.g., [45, 89, 29.. ]
 
-# Formulation1 (Equation 89 + section 9.1 of the paper) dictates that: 
+# Formulation1 (Equation 28 + section 9.1 of the paper) dictates that: 
 #    For the prediction sequence that maximises CCC, given set{E}:
 #       * Errors should be sorted in the same order as of the order in the gold standard, 
 #                       and are added to the gold standard to generate the prediction sequence.
@@ -60,7 +60,7 @@ p1r_Err           = np.zeros_like(GoldSeq)           # Try any other sequence by
 p1r_Err[DatSort] = ErrData[ErrRandomOrder]
 p1r_Data         = GoldSeq+p1r_Err
 
-# Formulation2 (Equation 90 + section 9.2 of the paper) dictates that:
+# Formulation2 (Equation 29 + section 9.2 of the paper) dictates that:
 #    For the prediction sequence that maximises CCC, given set{E}:
 #       * Errors should be sorted in the opposite order as of the order in the gold standard, 
 #                       and are subtracted from the gold standard to generate the prediction sequence.
@@ -69,16 +69,18 @@ p1r_Data         = GoldSeq+p1r_Err
 
 p2Err           = np.zeros_like(GoldSeq)   
 p2Err[DatSort]  = ErrData[ErrSort[::-1]] # p2Error = sequence of error coefficients sorted in a ascending order
-p2Data          = GoldSeq-p2Err           # p2Data = GoldSeq-p2Error = corresponding prediction sequence maximising CCC.
 
 # Any other random order of the given error coefficients
 ErrRandomOrder  = random.sample(range(p2Err.shape[0]), p2Err.shape[0])         
-p2r_Err           = np.zeros_like(GoldSeq)           # Try any other sequence by reordering of the error coefficients, 
+p2r_Err         = np.zeros_like(GoldSeq)           # Try any other sequence by reordering of the error coefficients, 
                                                     # but the resulting prediction sequence is bound to result in a lower CCC.
 p2r_Err[DatSort] = ErrData[ErrRandomOrder]
-p2r_Data         = GoldSeq-p2r_Err
 
-# Minimum CCC achievable for the two formulations (Equation 99 + section 9.1, and Equation 100 + section 9.2 of the paper)
+# Minimum CCC achievable for the two formulations (Equation 33 + section 9.1, and Equation 34 + section 9.2 of the paper)
+p2Data        = GoldSeq-p2Err           # p2Data = GoldSeq-p2Error = corresponding prediction sequence maximising CCC.
+p2r_Data      = GoldSeq-p2r_Err
+
+# Minimum CCC achievable for the two formulations (Equation 35 + section 9.1, and Equation 36 + section 9.2 of the paper)
 p1DataNeg     = GoldSeq+p2Err
 p2DataNeg     = GoldSeq-p1Err
 

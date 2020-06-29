@@ -1,5 +1,5 @@
 # (c) Vedhas Pandit
-# The following script reaffirms the formulation presented in Section 3: the Equation 15.
+# The following script reaffirms the formulation presented in Section 3: the Equation 4.
 # That is, CCC = 1 - MSE(X,Y)/(MSE(X,Y)+2std(X,Y)) = 1/(1+MSE(X,Y)/2std(X,Y))
 # Using the script below, one can test the established identity using own gold standard sequence (GoldSeq) and/or own set of error coefficients (p1r_Err). 
 
@@ -54,7 +54,7 @@ mse    = np.sum(np.power(p1r_Err,2))
 stdXY  = np.cov(GoldSeq,p1r_Data,bias=1)[0][1]*(GoldSeq.size)
 cccAlt = 1/(1+(0.5*mse/stdXY))
 cccAlt2 = 1-(mse/(mse+2*stdXY))
-print("CCC (gold, pred) = {:.5f}".format(ccc1))
-print("CCC (gold, pred) = {:.5f}".format(cccAlt))
-print("CCC (gold, pred) = {:.5f}".format(cccAlt2))
-print("Check that the three lines above match exactly.")
+print("CCC (gold, pred) = {:.5f}\tComputed with classical formulation, Equation 3.".format(ccc1))
+print("CCC (gold, pred) = {:.5f}\tComputed with proposed  formulation, Equation 4: 1/(1+(0.5*mse/stdXY)).".format(cccAlt))
+print("CCC (gold, pred) = {:.5f}\tComputed with proposed  formulation, Equation 4: 1-(mse/(mse+2*stdXY)).".format(cccAlt2))
+print("Verify that the CCC values in the three lines above match exactly = {:.5f}".format(ccc1))
